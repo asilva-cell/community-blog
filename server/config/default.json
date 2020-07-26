@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://asilva:iUNWU2A6ZcDNCusP@cluster0.8szpw.mongodb.net/blog?retryWrites=true&w=majority",
+  "jwtSecret": "pokemonarentasfunastheythinktheyare"
+}
