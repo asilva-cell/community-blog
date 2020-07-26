@@ -4,9 +4,8 @@ const Router = express.Router;
 const { basicAuth, jwtAuth, createJWT } = require("./auth");
 
 const setupV1Routes = (apiRouter) => {
-  // Controller Functions
-
-  async function findAllPosts(request, response) {
+  
+    async function findAllPosts(request, response) {
     try {
       const posts = await Post.find().sort({ date: -1 });
       response.json(posts);
@@ -62,7 +61,6 @@ const setupV1Routes = (apiRouter) => {
   v1Router.post("/delete", jwtAuth, deletePost);
   v1Router.post("/updatePost", updatePost);
   v1Router.post("/login", basicAuth, createJWT);
-
   apiRouter.use("/v1", v1Router);
 };
 

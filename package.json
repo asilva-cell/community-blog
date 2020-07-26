@@ -1,7 +1,8 @@
 {
-  "name": "fakebook",
+  "name": "community",
   "version": "1.0.0",
-  "description": "",
+  "description": "A public blog to communicate within the community",
+  "type": "module",
   "engines": {
     "node": "v14.3.0"
   },
@@ -28,7 +29,6 @@
     "chai": "^4.2.0",
     "mocha": "^7.2.0"
   },
-  "type": "module",
   "dependencies": {
     "node-cache": "^5.1.0"
   }

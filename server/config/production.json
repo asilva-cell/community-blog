@@ -1,4 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://Fakebook:Fakebook@cluster0-rangp.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "pokemonarentasfunastheythinktheyare"
-}

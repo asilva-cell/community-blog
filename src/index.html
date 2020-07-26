@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAKEbook</title>
+    <title>MyCommunity</title>
     <link rel='stylesheet' href='./index.css'>
 
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap" rel="stylesheet">    
-    <script type='text/javascript' src="scripts/jquery.js" ></script>
+    <script type='text/javascript' src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script type='text/javascript' src="scripts/index.js" ></script>
-    
     
 
 <body>
     <header>
-        <img class="fakebook-logo" src="./FAKEbook.png" alt="Fakebook Logo" />
-        <span id="title">Fakebook</span>
+        <img class="logo" src="./images/company.svg" alt="Logo" />
+        <span id="title">My Community Room</span>
         <button id="hidde" onClick="pressedLogOut()">Log Out</button>
     </header>
 
@@ -42,10 +41,9 @@
         </div>
         <div class="create-user" id="createUser">
             <div id='createUserContainer'>
-
                 <input class="card user-input" id='createUserInput'  type="text" placeholder="Username" />
-                <input class="card user-input" id='createPassInput'  type="password" placeholder="Password" />
                 <input class="card user-input" id='createEmailInput' type="text" placeholder="Email" />
+                <input class="card user-input" id='createPassInput'  type="password" placeholder="Password" />
                 <input class="card user-input" id='signUpButton' type="button" value="Sign Up" onclick="createUserButtonPressed()"/>
                 <div class="or-label"><span>or</span></div>
                 <button class="card user-input" id="loginPageButton2" onclick="switchVisibleElements('createUser', 'loginUser')">Log in</button>

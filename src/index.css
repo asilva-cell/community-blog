@@ -45,7 +45,7 @@ header {
   grid-column-end: -1;
 }
 
-.fakebook-logo {
+.logo {
   height: 100%;
   border-radius: 5px;
 }
@@ -251,6 +251,7 @@ header {
   margin-top: 2%;
   margin-bottom: 2%;
   margin-left: 1%;
+  
 }
 .comment-button {
   width: 40%;

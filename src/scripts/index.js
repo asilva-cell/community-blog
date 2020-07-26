@@ -1,28 +1,13 @@
 let TOKEN_NAME = "token";
 let token = "";
-let user
-$(document).ready(function () {
-  if (hasToken() && hasUser()) {
-    loadUserMedia("user-area", "status-input");
-    show("logOut")
-    updatePostsFromServer();
-  }
-});
+let user;
 
-function cleanOutElement(id) {
-  $("#" + id).html("");
-}
-
+//UI Utility functions
 function appendHtml(id, htmlToAdd) {
   $("#" + id).append(htmlToAdd);
 }
-
-function setInputValue(id, newValue) {
-  return $("#" + id).val(newValue);
-}
-
-function getInputValue(id) {
-  return $("#" + id).val();
+function cleanOutElement(id) {
+  $("#" + id).html("");
 }
 
 function hide(id) {
@@ -41,11 +26,27 @@ function enable(id) {
   $("#" + id).prop("disabled", false);
 }
 
-function pressedLogOut() {
-  $.removeCookie(TOKEN_NAME);
-  $.removeCookie(user_name);
-  window.location.href = "index.html";
+function switchVisibleElements(idToHide, idToShow) {
+  $(`#${idToHide}`).toggle();
+  $(`#${idToShow}`).toggle();
 }
+
+function setInputValue(id, newValue) {
+  return $("#" + id).val(newValue);
+}
+
+function getInputValue(id) {
+  return $("#" + id).val();
+}
+
+//User handling
+$(document).ready(function () {
+  if (hasToken() && hasUser()) {
+    loadUserMedia("user-area", "status-input");
+    show("logOut");
+    updatePostsFromServer();
+  }
+});
 
 let user_name = "username";
 
@@ -66,10 +67,6 @@ function setToken(_token) {
   $.cookie(TOKEN_NAME, _token);
   token = _token;
 }
-
-// function getToken() {
-//   $.cookie(TOKEN_NAME);
-// }
 
 function hasToken() {
   if ($.cookie(TOKEN_NAME)) {
@@ -93,20 +90,14 @@ function todaysDateString() {
   return new Date().toISOString().substring(0, 10);
 }
 
-// getting and setting posts on the page
-examplePost = {
-  postText: "Hi, this is a test post 0",
-  image: "",
-  author: "Tony Enerson",
-  postDate: "2020-05-19",
-};
-
 function addPostToPage(post) {
   if (post.postText !== undefined) {
     let postHtml = `
 			<div class="post-card card" id="${post.uid}">
 				<div class='post-card-header'>
-					<img class="profile-thumbnail" src='https://robohash.org/${post.uid}?set=set2&size=180x180'/>
+					<img class="profile-thumbnail" src='https://robohash.org/${
+            post.uid
+          }?set=set2&size=180x180'/>
 					<div class="post-author"> 
 						${post.author.toUpperCase()}
 						</br>
@@ -114,21 +105,31 @@ function addPostToPage(post) {
 					</div>
 				</div>
 				<div  class="dropdown-container">
-					<button class="ellipsis-button" onclick="ellipsisButtonPressed('list${post.uid}')">&#8285;</button>
+					<button class="ellipsis-button" onclick="ellipsisButtonPressed('list${
+            post.uid
+          }')">&#8285;</button>
 					<div id="list${post.uid}" class="dropdown-content"> 
-						<div class="drop-down-item" onclick="editButtonPressed('${post.uid}')"> Edit </div>
-							<div class="drop-down-item" onclick="deleteButtonPressed(${post.uid})"> Delete </div>
+						<div class="drop-down-item" onclick="editButtonPressed('${
+              post.uid
+            }')"> Edit </div>
+							<div class="drop-down-item" onclick="deleteButtonPressed(${
+                post.uid
+              })"> Delete </div>
 						</div>
 					</div>
 				<div id="textArea${post.uid}" class="post-card-text">${post.postText}</div>
 				
 				<div id="${post.uid}container" class="post-card-text">
 	 				<textarea type='text' id="editArea${post.uid}">${post.postText} </textarea>
-	 				<button id="saveChangesButton${post.uid}" onclick="saveChangesButtonPressed('${post.uid}')">Save</button>
+	 				<button id="saveChangesButton${post.uid}" onclick="saveChangesButtonPressed('${
+      post.uid
+    }')">Save</button>
 	 			</div>
 		
 				<div class="post-footer">			
-					<button class='button-with-image comment-button' id='commentButton${post.uid}' onClick="commentButtonPressed(${post.uid})">
+					<button class='button-with-image comment-button' id='commentButton${
+            post.uid
+          }' onClick="commentButtonPressed(${post.uid})">
 						&#128172; Comments
 					</button>
 				</div>
@@ -137,7 +138,11 @@ function addPostToPage(post) {
 					<div class="comment-card-container" id='commentFeed${post.uid}'> 
 					</div>
 				</div>
-					<input class="comment-input" id='commentInput${post.uid}' placeholder="Write your comment..." onChange="commentKeystroke('${post.uid}')"/>
+					<input class="comment-input" id='commentInput${
+            post.uid
+          }' placeholder="Write your comment..." onChange="commentKeystroke('${
+      post.uid
+    }')"/>
 			</div>
 		`;
 
@@ -153,16 +158,10 @@ function ellipsisButtonPressed(id) {
 }
 
 function editButtonPressed(id) {
-  let date = getInputValue(`date${id}`);
   $("#" + `textArea${id}`).toggle();
   $("#" + `editArea${id}`).toggle();
   $("#" + `saveChangesButton${id}`).toggle();
   hide(`list${id}`);
-}
-
-function switchVisibleElements(idToHide, idToShow) {
-  $(`#${idToHide}`).toggle();
-  $(`#${idToShow}`).toggle();
 }
 
 function getPostFromForm(
@@ -171,7 +170,6 @@ function getPostFromForm(
   id = String(new Date().getTime()),
   commentsArray = []
 ) {
-  
   let inputText;
   if (inputHasSomeText(inputTextId)) {
     inputText = getInputValue(inputTextId);
@@ -211,26 +209,26 @@ function createCommentFromForm(
     console.log("post does not have text");
   }
 }
-// let testComment = {
-//   commentId: `12345`,
-//   avatar: `https://robohash.org/12345?set=set2&size=180x180`,
-//   date: "1991",
-//   author: "Anonymous",
-//   text: "This is a test Comment",
-//   parentId: `commentFeed12345`,
-// };
 
 function createCommentCard(newComment) {
   let commentCard = `
   <div id='${newComment.commentId}' class='comment-card card'>
     <div class="comment-header"> 
-      <img id='img${newComment.commentId}' src='${newComment.avatar}' class='profile-thumbnail'/>
+      <img id='img${newComment.commentId}' src='${
+    newComment.avatar
+  }' class='profile-thumbnail'/>
       <div class="post-author"> 
-        <div id='author${newComment.commentId}' class='comment-author'> ${newComment.author.toUpperCase()}</div>
-        <div id='date${newComment.commentId}' class='comment-date'> ${newComment.date} </div>
+        <div id='author${
+          newComment.commentId
+        }' class='comment-author'> ${newComment.author.toUpperCase()}</div>
+        <div id='date${newComment.commentId}' class='comment-date'> ${
+    newComment.date
+  } </div>
       </div>
     </div>
-    <div id='text${newComment.commentId}' class='comment-text'> ${newComment.text}</div>
+    <div id='text${newComment.commentId}' class='comment-text'> ${
+    newComment.text
+  }</div>
   </div>
   `;
   appendHtml(`commentFeed${newComment.parentId}`, commentCard);
@@ -258,14 +256,11 @@ function createCommentArray(id) {
 function commentKeystroke(postUID) {
   let newText = `textArea${postUID}`;
   let date = $("#" + `date${postUID}`).text();
-  console.log(newText);
-  console.log(date);
-
   let commentToAdd = createCommentFromForm(postUID);
-  createCommentCard(commentToAdd);
   let commentsArray = createCommentArray(`${postUID}`);
-
   let newPost = getPostFromForm(newText, date, postUID, commentsArray);
+
+  createCommentCard(commentToAdd);
   updateOnePost(newPost);
 }
 
@@ -284,14 +279,8 @@ function commentButtonPressed(cardId) {
   $("#commentInput" + id).focus();
 }
 
-function clearNewsFeedButtonPressed() {
-  clearPostsFromServer();
-}
-
 function deleteButtonPressed(id) {
-  let data = { uid: String(id) };
-
-  deleteFromServer(data);
+  deleteFromServer({ uid: String(id) });
 }
 
 function createUserButtonPressed() {
@@ -332,14 +321,12 @@ function loadUserMedia(idToHide, idToShow) {
   switchVisibleElements(idToHide, idToShow);
 }
 
-function errorMessage (id, message){
-  $(`#${id}`).css('visibility', 'visible')
-
+function errorMessage(id, message) {
+  $(`#${id}`).css("visibility", "visible");
   $(`#${id}`).html(`${message}`);
-
 }
-//---- server interaction
 
+//---- server interaction
 function createUser(userObject, idToHide, idToShow) {
   $.ajax({
     url: "/users",
@@ -352,13 +339,11 @@ function createUser(userObject, idToHide, idToShow) {
       loadUserMedia(idToHide, idToShow);
       show("logOut");
       updatePostsFromServer();
-     
     },
-    error: function (err) {
-      let obj = jQuery.parseJSON( err.responseText );
-      console.log(err)
-      errorMessage('loginErrorMessage', obj.errors[0].msg)
-
+    error: function (error) {
+      let obj = jQuery.parseJSON(err.responseText);
+      console.log(error);
+      errorMessage("loginErrorMessage", obj.errors[0].msg);
     },
   });
 }
@@ -377,8 +362,8 @@ function userLogin(userLoginObject, idToHide, idToShow) {
       updatePostsFromServer();
     },
     error: function (err) {
-      let obj = jQuery.parseJSON( err.responseText );
-      errorMessage('loginErrorMessage', obj.errors[0].msg)
+      let obj = jQuery.parseJSON(err.responseText);
+      errorMessage("loginErrorMessage", obj.errors[0].msg);
     },
   });
 }
@@ -402,27 +387,8 @@ function postPostsToServerAndUpdatePage(post) {
 }
 
 function updatePostsFromServer() {
-  $.getJSON("/api/v1/posts")
-    .done(function (posts) {
-      updatePagePosts(posts);
-    })
-    
-}
-
-function clearPostsFromServer() {
-  $.ajax({
-    url: "/api/v1/clear",
-    type: "POST",
-    contentType: "application/json; charset=utf-8",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    success: function () {
-      updatePostsFromServer();
-    },
-    error: function (error) {
-      console.log(error.message);
-    },
+  $.getJSON("/api/v1/posts").done(function (posts) {
+    updatePagePosts(posts);
   });
 }
 

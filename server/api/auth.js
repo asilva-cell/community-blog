@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
-//Basic auth is cheching user email and password
+//Basic auth is checking user email and password
 async function basicAuth(request, response, next) {
   // check username and password against database
   const { email, password } = request.body;
@@ -67,17 +67,15 @@ async function createJWT(request, response) {
       id: user.id,
     },
   };
-  
+
   const token = jwt.sign(payload, config.get("jwtSecret"), {
     expiresIn: 10800, // expeires in 3 hours
   });
-  
+
   return response.json({
     message: "login success",
     token: token,
-
-    user: user.username
-
+    user: user.username,
   });
 }
 
