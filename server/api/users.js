@@ -50,8 +50,6 @@ router.post(
         user: {
           id: user.id,
           user: user.username,
-          password: user.password,
-          email: user.email
         },
       };
 
@@ -63,7 +61,6 @@ router.post(
           if (err) throw err;
           res.json({ token, payload });
         }
-
       );
     } catch (err) {
       res.status(500).send("Server error");
